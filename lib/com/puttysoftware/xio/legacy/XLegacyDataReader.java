@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import com.puttysoftware.xio.UnexpectedTagException;
-
 public class XLegacyDataReader implements AutoCloseable {
     // Fields
     private final BufferedReader br;
