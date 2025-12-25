@@ -16,45 +16,38 @@ public class MusicConstants {
 
     // Private constructor
     private MusicConstants() {
-        // Do nothing
+	// Do nothing
     }
 
     public static int getMusicID(final int ID) {
-        if (ID == MusicConstants.MUSIC_EXPLORING) {
-            final int nID = PartyManager.getParty().getTowerLevel()
-                    / MusicConstants.DIVIDE_BASE;
-            return nID + MusicConstants.OFFSET_EXPLORING;
-        } else if (ID == MusicConstants.MUSIC_BATTLE) {
-            final int nID = PartyManager.getParty().getTowerLevel()
-                    / MusicConstants.DIVIDE_BASE;
-            if (PreferencesManager.useMapBattleEngine()) {
-                return nID + MusicConstants.OFFSET_MAP_BATTLE;
-            } else {
-                return nID + MusicConstants.OFFSET_WINDOW_BATTLE;
-            }
-        } else {
-            return ID;
-        }
+	if (ID == MusicConstants.MUSIC_EXPLORING) {
+	    final int nID = PartyManager.getParty().getTowerLevel() / MusicConstants.DIVIDE_BASE;
+	    return nID + MusicConstants.OFFSET_EXPLORING;
+	} else if (ID == MusicConstants.MUSIC_BATTLE) {
+	    final int nID = PartyManager.getParty().getTowerLevel() / MusicConstants.DIVIDE_BASE;
+	    if (PreferencesManager.useMapBattleEngine()) {
+		return nID + MusicConstants.OFFSET_MAP_BATTLE;
+	    } else {
+		return nID + MusicConstants.OFFSET_WINDOW_BATTLE;
+	    }
+	} else {
+	    return ID;
+	}
     }
 
     static String getMusicName(final int ID) {
-        if (ID == MusicConstants.MUSIC_EXPLORING) {
-            final int nID = PartyManager.getParty().getTowerLevel()
-                    / MusicConstants.DIVIDE_BASE;
-            return MusicConstants.MUSIC_NAMES[nID
-                    + MusicConstants.OFFSET_EXPLORING];
-        } else if (ID == MusicConstants.MUSIC_BATTLE) {
-            final int nID = PartyManager.getParty().getTowerLevel()
-                    / MusicConstants.DIVIDE_BASE;
-            if (PreferencesManager.useMapBattleEngine()) {
-                return MusicConstants.MUSIC_NAMES[nID
-                        + MusicConstants.OFFSET_MAP_BATTLE];
-            } else {
-                return MusicConstants.MUSIC_NAMES[nID
-                        + MusicConstants.OFFSET_WINDOW_BATTLE];
-            }
-        } else {
-            return MusicConstants.MUSIC_NAMES[ID];
-        }
+	if (ID == MusicConstants.MUSIC_EXPLORING) {
+	    final int nID = PartyManager.getParty().getTowerLevel() / MusicConstants.DIVIDE_BASE;
+	    return MusicConstants.MUSIC_NAMES[nID + MusicConstants.OFFSET_EXPLORING];
+	} else if (ID == MusicConstants.MUSIC_BATTLE) {
+	    final int nID = PartyManager.getParty().getTowerLevel() / MusicConstants.DIVIDE_BASE;
+	    if (PreferencesManager.useMapBattleEngine()) {
+		return MusicConstants.MUSIC_NAMES[nID + MusicConstants.OFFSET_MAP_BATTLE];
+	    } else {
+		return MusicConstants.MUSIC_NAMES[nID + MusicConstants.OFFSET_WINDOW_BATTLE];
+	    }
+	} else {
+	    return MusicConstants.MUSIC_NAMES[ID];
+	}
     }
 }

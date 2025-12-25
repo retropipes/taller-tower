@@ -2,8 +2,8 @@ package com.puttysoftware.tallertower.maze;
 
 import java.io.IOException;
 
-import com.puttysoftware.xio.XDataReader;
-import com.puttysoftware.xio.XDataWriter;
+import org.retropipes.diane.fileio.XDataReader;
+import org.retropipes.diane.fileio.XDataWriter;
 
 public interface SuffixIO {
     void writeSuffix(XDataWriter writer) throws IOException;

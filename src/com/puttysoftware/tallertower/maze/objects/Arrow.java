@@ -10,6 +10,6 @@ import com.puttysoftware.tallertower.maze.abc.AbstractTransientObject;
 public class Arrow extends AbstractTransientObject {
     // Constructors
     public Arrow() {
-        super("Arrow");
+	super("Arrow");
     }
 }

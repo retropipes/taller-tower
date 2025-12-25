@@ -11,7 +11,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import com.puttysoftware.images.BufferedImageIcon;
+import org.retropipes.diane.asset.image.BufferedImageIcon;
+
 import com.puttysoftware.tallertower.creatures.monsters.Element;
 
 public class MonsterImageManager {
@@ -20,28 +21,25 @@ public class MonsterImageManager {
     private static Class<?> LOAD_CLASS = MonsterImageManager.class;
     static int MONSTER_IMAGE_SIZE = 64;
 
-    public static BufferedImageIcon getImage(final String name,
-            final Element e) {
-        // Get it from the cache
-        final BufferedImageIcon bii = MonsterImageCache.getCachedImage(name,
-                e.getFaith().getColor().getRGB());
-        return ImageTransformer.getTransformedImage(bii,
-                MonsterImageManager.MONSTER_IMAGE_SIZE);
+    public static BufferedImageIcon getImage(final String name, final Element e) {
+	// Get it from the cache
+	final BufferedImageIcon bii = MonsterImageCache.getCachedImage(name, e.getFaith().getColor().getRGB());
+	return ImageTransformer.getTransformedImage(bii, MonsterImageManager.MONSTER_IMAGE_SIZE);
     }
 
     static BufferedImageIcon getUncachedImage(final String name) {
-        try {
-            final String normalName = ImageTransformer.normalizeName(name);
-            final URL url = MonsterImageManager.LOAD_CLASS.getResource(
-                    MonsterImageManager.LOAD_PATH + normalName + ".png");
-            final BufferedImage image = ImageIO.read(url);
-            return new BufferedImageIcon(image);
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
-        } catch (final IllegalArgumentException ia) {
-            return null;
-        }
+	try {
+	    final String normalName = ImageTransformer.normalizeName(name);
+	    final URL url = MonsterImageManager.LOAD_CLASS
+		    .getResource(MonsterImageManager.LOAD_PATH + normalName + ".png");
+	    final BufferedImage image = ImageIO.read(url);
+	    return new BufferedImageIcon(image);
+	} catch (final IOException ie) {
+	    return null;
+	} catch (final NullPointerException np) {
+	    return null;
+	} catch (final IllegalArgumentException ia) {
+	    return null;
+	}
     }
 }

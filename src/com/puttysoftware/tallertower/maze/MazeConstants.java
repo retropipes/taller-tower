@@ -11,6 +11,6 @@ public class MazeConstants {
     public static final int VISION_MODE_EXPLORE_AND_LOS = 3;
 
     private MazeConstants() {
-        // Do nothing
+	// Do nothing
     }
 }

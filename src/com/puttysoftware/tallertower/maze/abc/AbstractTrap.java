@@ -5,7 +5,8 @@ Any questions should be directed to the author via email at: mazer5d@worldwizard
  */
 package com.puttysoftware.tallertower.maze.abc;
 
-import com.puttysoftware.randomrange.RandomRange;
+import org.retropipes.diane.random.RandomRange;
+
 import com.puttysoftware.tallertower.maze.Maze;
 import com.puttysoftware.tallertower.maze.MazeConstants;
 import com.puttysoftware.tallertower.maze.utilities.TypeConstants;
@@ -16,18 +17,17 @@ public abstract class AbstractTrap extends AbstractMazeObject {
 
     // Constructors
     protected AbstractTrap(final int baseName) {
-        super(false, false);
-        this.base = baseName;
+	super(false, false);
+	this.base = baseName;
     }
 
     // Scriptability
     @Override
-    public abstract void postMoveAction(final boolean ie, final int dirX,
-            final int dirY);
+    public abstract void postMoveAction(final boolean ie, final int dirX, final int dirY);
 
     @Override
     public int getBaseID() {
-        return this.base;
+	return this.base;
     }
 
     @Override
@@ -35,29 +35,29 @@ public abstract class AbstractTrap extends AbstractMazeObject {
 
     @Override
     public int getLayer() {
-        return MazeConstants.LAYER_OBJECT;
+	return MazeConstants.LAYER_OBJECT;
     }
 
     @Override
     protected void setTypes() {
-        this.type.set(TypeConstants.TYPE_TRAP);
+	this.type.set(TypeConstants.TYPE_TRAP);
     }
 
     @Override
     public int getCustomProperty(final int propID) {
-        return AbstractMazeObject.DEFAULT_CUSTOM_VALUE;
+	return AbstractMazeObject.DEFAULT_CUSTOM_VALUE;
     }
 
     @Override
     public void setCustomProperty(final int propID, final int value) {
-        // Do nothing
+	// Do nothing
     }
 
     @Override
-    public boolean shouldGenerateObject(final Maze maze, final int row,
-            final int col, final int floor, final int level, final int layer) {
-        // Generate all traps at 25% rate
-        final RandomRange reject = new RandomRange(1, 100);
-        return reject.generate() < 25;
+    public boolean shouldGenerateObject(final Maze maze, final int row, final int col, final int floor, final int level,
+	    final int layer) {
+	// Generate all traps at 25% rate
+	final RandomRange reject = new RandomRange(1, 100);
+	return reject.generate() < 25;
     }
 }

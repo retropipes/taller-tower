@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.tallertower.resourcemanagers;
 
-import com.puttysoftware.images.BufferedImageIcon;
+import org.retropipes.diane.asset.image.BufferedImageIcon;
 
 final class CacheEntry {
     // Fields
@@ -14,16 +14,16 @@ final class CacheEntry {
 
     // Constructor
     CacheEntry(final BufferedImageIcon newImage, final String newName) {
-        this.image = newImage;
-        this.name = newName;
+	this.image = newImage;
+	this.name = newName;
     }
 
     // Methods
     BufferedImageIcon getImage() {
-        return this.image;
+	return this.image;
     }
 
     String getName() {
-        return this.name;
+	return this.name;
     }
 }

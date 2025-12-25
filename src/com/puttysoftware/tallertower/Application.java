@@ -6,11 +6,15 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.tallertower;
 
 import java.awt.Image;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.images.BufferedImageIcon;
+import org.retropipes.diane.asset.image.BufferedImageIcon;
+import org.retropipes.diane.gui.dialog.CommonDialogs;
+import org.retropipes.diane.update.ProductData;
+
 import com.puttysoftware.tallertower.battle.AbstractBattle;
 import com.puttysoftware.tallertower.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.tallertower.battle.map.turn.MapTurnBattleLogic;
@@ -25,7 +29,6 @@ import com.puttysoftware.tallertower.resourcemanagers.SoundConstants;
 import com.puttysoftware.tallertower.resourcemanagers.SoundManager;
 import com.puttysoftware.tallertower.shops.Shop;
 import com.puttysoftware.tallertower.shops.ShopTypes;
-import com.puttysoftware.updater.ProductData;
 
 public final class Application {
     // Fields
@@ -36,8 +39,7 @@ public final class Application {
     private ObjectHelpManager oHelpMgr;
     private GUIManager guiMgr;
     private final MazeObjectList objects;
-    private Shop weapons, armor, healer, bank, regenerator, spells, items,
-            socks, enhancements, faiths;
+    private Shop weapons, armor, healer, bank, regenerator, spells, items, socks, enhancements, faiths;
     private WindowTurnBattleLogic windowTurnBattle;
     private WindowTimeBattleLogic windowTimeBattle;
     private MapTurnBattleLogic mapTurnBattle;
@@ -46,16 +48,7 @@ public final class Application {
     private int formerMode;
     private static final String UPDATE_SITE = "http://update.puttysoftware.com/tallertower/";
     private static final String NEW_VERSION_SITE = "http://www.puttysoftware.com/tallertower/";
-    private static final String PRODUCT_NAME = "TallerTower";
-    private static final String COMPANY_NAME = "Putty Software";
-    private static final String RDNS_COMPANY_NAME = "com.puttysoftware.tallertower";
-    private static final ProductData pd = new ProductData(
-            Application.UPDATE_SITE, Application.UPDATE_SITE,
-            Application.NEW_VERSION_SITE, Application.RDNS_COMPANY_NAME,
-            Application.COMPANY_NAME, Application.PRODUCT_NAME,
-            Application.VERSION_MAJOR, Application.VERSION_MINOR,
-            Application.VERSION_BUGFIX, Application.VERSION_CODE,
-            Application.VERSION_PRERELEASE);
+    private static ProductData pd;
     private static final int VERSION_MAJOR = 5;
     private static final int VERSION_MINOR = 1;
     private static final int VERSION_BUGFIX = 0;
@@ -69,196 +62,202 @@ public final class Application {
 
     // Constructors
     public Application() {
-        this.objects = new MazeObjectList();
-        this.currentMode = Application.STATUS_NULL;
-        this.formerMode = Application.STATUS_NULL;
+	try {
+	    Application.pd = new ProductData(Application.UPDATE_SITE, Application.NEW_VERSION_SITE,
+		    Application.VERSION_MAJOR, Application.VERSION_MINOR, Application.VERSION_BUGFIX,
+		    Application.VERSION_CODE, Application.VERSION_PRERELEASE);
+	} catch (MalformedURLException | URISyntaxException e) {
+	    TallerTower.logError(e);
+	}
+	this.objects = new MazeObjectList();
+	this.currentMode = Application.STATUS_NULL;
+	this.formerMode = Application.STATUS_NULL;
     }
 
     // Methods
     void postConstruct() {
-        // Create Managers
-        this.about = new AboutDialog(Application.getVersionString());
-        this.guiMgr = new GUIManager();
-        this.menuMgr = new MenuManager();
-        this.oHelpMgr = new ObjectHelpManager();
-        this.windowTurnBattle = new WindowTurnBattleLogic();
-        this.windowTimeBattle = new WindowTimeBattleLogic();
-        this.mapTurnBattle = new MapTurnBattleLogic();
-        this.mapTimeBattle = new MapTimeBattleLogic();
-        this.weapons = new Shop(ShopTypes.SHOP_TYPE_WEAPONS);
-        this.armor = new Shop(ShopTypes.SHOP_TYPE_ARMOR);
-        this.healer = new Shop(ShopTypes.SHOP_TYPE_HEALER);
-        this.bank = new Shop(ShopTypes.SHOP_TYPE_BANK);
-        this.regenerator = new Shop(ShopTypes.SHOP_TYPE_REGENERATOR);
-        this.spells = new Shop(ShopTypes.SHOP_TYPE_SPELLS);
-        this.items = new Shop(ShopTypes.SHOP_TYPE_ITEMS);
-        this.socks = new Shop(ShopTypes.SHOP_TYPE_SOCKS);
-        this.enhancements = new Shop(ShopTypes.SHOP_TYPE_ENHANCEMENTS);
-        this.faiths = new Shop(ShopTypes.SHOP_TYPE_FAITH_POWERS);
-        // Cache Logo
-        this.guiMgr.updateLogo();
+	// Create Managers
+	this.about = new AboutDialog(Application.getVersionString());
+	this.guiMgr = new GUIManager();
+	this.menuMgr = new MenuManager();
+	this.oHelpMgr = new ObjectHelpManager();
+	this.windowTurnBattle = new WindowTurnBattleLogic();
+	this.windowTimeBattle = new WindowTimeBattleLogic();
+	this.mapTurnBattle = new MapTurnBattleLogic();
+	this.mapTimeBattle = new MapTimeBattleLogic();
+	this.weapons = new Shop(ShopTypes.SHOP_TYPE_WEAPONS);
+	this.armor = new Shop(ShopTypes.SHOP_TYPE_ARMOR);
+	this.healer = new Shop(ShopTypes.SHOP_TYPE_HEALER);
+	this.bank = new Shop(ShopTypes.SHOP_TYPE_BANK);
+	this.regenerator = new Shop(ShopTypes.SHOP_TYPE_REGENERATOR);
+	this.spells = new Shop(ShopTypes.SHOP_TYPE_SPELLS);
+	this.items = new Shop(ShopTypes.SHOP_TYPE_ITEMS);
+	this.socks = new Shop(ShopTypes.SHOP_TYPE_SOCKS);
+	this.enhancements = new Shop(ShopTypes.SHOP_TYPE_ENHANCEMENTS);
+	this.faiths = new Shop(ShopTypes.SHOP_TYPE_FAITH_POWERS);
+	// Cache Logo
+	this.guiMgr.updateLogo();
     }
 
     public void setMode(final int newMode) {
-        this.formerMode = this.currentMode;
-        this.currentMode = newMode;
+	this.formerMode = this.currentMode;
+	this.currentMode = newMode;
     }
 
     public int getMode() {
-        return this.currentMode;
+	return this.currentMode;
     }
 
     public int getFormerMode() {
-        return this.formerMode;
+	return this.formerMode;
     }
 
     public boolean modeChanged() {
-        return this.formerMode != this.currentMode;
+	return this.formerMode != this.currentMode;
     }
 
     public void saveFormerMode() {
-        this.formerMode = this.currentMode;
+	this.formerMode = this.currentMode;
     }
 
     public void restoreFormerMode() {
-        this.currentMode = this.formerMode;
+	this.currentMode = this.formerMode;
     }
 
     public void showMessage(final String msg) {
-        if (this.currentMode == Application.STATUS_GAME) {
-            this.getGameManager().setStatusMessage(msg);
-        } else if (this.currentMode == Application.STATUS_BATTLE) {
-            this.getBattle().setStatusMessage(msg);
-        } else {
-            CommonDialogs.showDialog(msg);
-        }
+	if (this.currentMode == Application.STATUS_GAME) {
+	    this.getGameManager().setStatusMessage(msg);
+	} else if (this.currentMode == Application.STATUS_BATTLE) {
+	    this.getBattle().setStatusMessage(msg);
+	} else {
+	    CommonDialogs.showDialog(msg);
+	}
     }
 
     public MenuManager getMenuManager() {
-        return this.menuMgr;
+	return this.menuMgr;
     }
 
     public GUIManager getGUIManager() {
-        return this.guiMgr;
+	return this.guiMgr;
     }
 
     public GameLogicManager getGameManager() {
-        if (this.gameMgr == null) {
-            this.gameMgr = new GameLogicManager();
-        }
-        return this.gameMgr;
+	if (this.gameMgr == null) {
+	    this.gameMgr = new GameLogicManager();
+	}
+	return this.gameMgr;
     }
 
     public MazeManager getMazeManager() {
-        if (this.mazeMgr == null) {
-            this.mazeMgr = new MazeManager();
-        }
-        return this.mazeMgr;
+	if (this.mazeMgr == null) {
+	    this.mazeMgr = new MazeManager();
+	}
+	return this.mazeMgr;
     }
 
     public ObjectHelpManager getObjectHelpManager() {
-        return this.oHelpMgr;
+	return this.oHelpMgr;
     }
 
     public AboutDialog getAboutDialog() {
-        return this.about;
+	return this.about;
     }
 
     public static BufferedImageIcon getMicroLogo() {
-        return LogoManager.getMicroLogo();
+	return LogoManager.getMicroLogo();
     }
 
     public static Image getIconLogo() {
-        return LogoManager.getIconLogo();
+	return LogoManager.getIconLogo();
     }
 
     public static void playLogoSound() {
-        SoundManager.playSound(SoundConstants.SOUND_LOGO);
+	SoundManager.playSound(SoundConstants.SOUND_LOGO);
     }
 
     private static String getVersionString() {
-        final int code = Application.pd.getCodeVersion();
-        String rt;
-        if (code < ProductData.CODE_STABLE) {
-            rt = "-beta" + Application.VERSION_PRERELEASE;
-        } else {
-            rt = "";
-        }
-        return Application.VERSION_MAJOR + "." + Application.VERSION_MINOR + "."
-                + Application.VERSION_BUGFIX + rt;
+	final int code = Application.pd.getCodeVersion();
+	String rt;
+	if (code < ProductData.CODE_STABLE) {
+	    rt = "-beta" + Application.VERSION_PRERELEASE;
+	} else {
+	    rt = "";
+	}
+	return Application.VERSION_MAJOR + "." + Application.VERSION_MINOR + "." + Application.VERSION_BUGFIX + rt;
     }
 
     public JFrame getOutputFrame() {
-        try {
-            if (this.getMode() == Application.STATUS_PREFS) {
-                return PreferencesManager.getPrefFrame();
-            } else if (this.getMode() == Application.STATUS_GUI) {
-                return this.getGUIManager().getGUIFrame();
-            } else if (this.getMode() == Application.STATUS_GAME) {
-                return this.getGameManager().getOutputFrame();
-            } else if (this.getMode() == Application.STATUS_BATTLE) {
-                return this.getBattle().getOutputFrame();
-            } else {
-                return null;
-            }
-        } catch (final NullPointerException npe) {
-            return null;
-        }
+	try {
+	    if (this.getMode() == Application.STATUS_PREFS) {
+		return PreferencesManager.getPrefFrame();
+	    } else if (this.getMode() == Application.STATUS_GUI) {
+		return this.getGUIManager().getGUIFrame();
+	    } else if (this.getMode() == Application.STATUS_GAME) {
+		return this.getGameManager().getOutputFrame();
+	    } else if (this.getMode() == Application.STATUS_BATTLE) {
+		return this.getBattle().getOutputFrame();
+	    } else {
+		return null;
+	    }
+	} catch (final NullPointerException npe) {
+	    return null;
+	}
     }
 
     public MazeObjectList getObjects() {
-        return this.objects;
+	return this.objects;
     }
 
     public Shop getGenericShop(final int shopType) {
-        this.getGameManager().stopMovement();
-        switch (shopType) {
-            case ShopTypes.SHOP_TYPE_ARMOR:
-                return this.armor;
-            case ShopTypes.SHOP_TYPE_BANK:
-                return this.bank;
-            case ShopTypes.SHOP_TYPE_ENHANCEMENTS:
-                return this.enhancements;
-            case ShopTypes.SHOP_TYPE_FAITH_POWERS:
-                return this.faiths;
-            case ShopTypes.SHOP_TYPE_HEALER:
-                return this.healer;
-            case ShopTypes.SHOP_TYPE_ITEMS:
-                return this.items;
-            case ShopTypes.SHOP_TYPE_REGENERATOR:
-                return this.regenerator;
-            case ShopTypes.SHOP_TYPE_SOCKS:
-                return this.socks;
-            case ShopTypes.SHOP_TYPE_SPELLS:
-                return this.spells;
-            case ShopTypes.SHOP_TYPE_WEAPONS:
-                return this.weapons;
-            default:
-                // Invalid shop type
-                return null;
-        }
+	this.getGameManager().stopMovement();
+	switch (shopType) {
+	case ShopTypes.SHOP_TYPE_ARMOR:
+	    return this.armor;
+	case ShopTypes.SHOP_TYPE_BANK:
+	    return this.bank;
+	case ShopTypes.SHOP_TYPE_ENHANCEMENTS:
+	    return this.enhancements;
+	case ShopTypes.SHOP_TYPE_FAITH_POWERS:
+	    return this.faiths;
+	case ShopTypes.SHOP_TYPE_HEALER:
+	    return this.healer;
+	case ShopTypes.SHOP_TYPE_ITEMS:
+	    return this.items;
+	case ShopTypes.SHOP_TYPE_REGENERATOR:
+	    return this.regenerator;
+	case ShopTypes.SHOP_TYPE_SOCKS:
+	    return this.socks;
+	case ShopTypes.SHOP_TYPE_SPELLS:
+	    return this.spells;
+	case ShopTypes.SHOP_TYPE_WEAPONS:
+	    return this.weapons;
+	default:
+	    // Invalid shop type
+	    return null;
+	}
     }
 
     public AbstractBattle getBattle() {
-        if (PreferencesManager.useMapBattleEngine()) {
-            if (PreferencesManager.useTimeBattleEngine()) {
-                return this.mapTimeBattle;
-            } else {
-                return this.mapTurnBattle;
-            }
-        } else {
-            if (PreferencesManager.useTimeBattleEngine()) {
-                return this.windowTimeBattle;
-            } else {
-                return this.windowTurnBattle;
-            }
-        }
+	if (PreferencesManager.useMapBattleEngine()) {
+	    if (PreferencesManager.useTimeBattleEngine()) {
+		return this.mapTimeBattle;
+	    } else {
+		return this.mapTurnBattle;
+	    }
+	} else {
+	    if (PreferencesManager.useTimeBattleEngine()) {
+		return this.windowTimeBattle;
+	    } else {
+		return this.windowTurnBattle;
+	    }
+	}
     }
 
     public void resetBattleGUI() {
-        this.mapTimeBattle.resetGUI();
-        this.windowTimeBattle.resetGUI();
-        this.mapTurnBattle.resetGUI();
-        this.windowTurnBattle.resetGUI();
+	this.mapTimeBattle.resetGUI();
+	this.windowTimeBattle.resetGUI();
+	this.mapTurnBattle.resetGUI();
+	this.windowTurnBattle.resetGUI();
     }
 }

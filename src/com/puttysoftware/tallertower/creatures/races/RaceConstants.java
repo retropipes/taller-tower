@@ -8,7 +8,8 @@ package com.puttysoftware.tallertower.creatures.races;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.puttysoftware.fileutils.ResourceStreamReader;
+import org.retropipes.diane.fileio.utility.ResourceStreamReader;
+
 import com.puttysoftware.tallertower.TallerTower;
 import com.puttysoftware.tallertower.datamanagers.RaceDataManager;
 
@@ -25,42 +26,40 @@ public class RaceConstants {
     private static boolean INITED = false;
 
     public static final String getRaceName(final int index) {
-        return RaceConstants.RACE_NAMES[index];
+	return RaceConstants.RACE_NAMES[index];
     }
 
     public static String[] getRaceNames() {
-        return RaceConstants.RACE_NAMES;
+	return RaceConstants.RACE_NAMES;
     }
 
     static final int getRacesCount() {
-        return RaceConstants.RACES_COUNT;
+	return RaceConstants.RACES_COUNT;
     }
 
     static boolean racesReady() {
-        return RaceConstants.INITED;
+	return RaceConstants.INITED;
     }
 
     static void initRaces() {
-        if (!RaceConstants.INITED) {
-            try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                    RaceDataManager.class.getResourceAsStream(
-                            "/com/puttysoftware/tallertower/resources/data/race/catalog.txt"))) {
-                // Fetch data
-                final ArrayList<String> tempNames = new ArrayList<>();
-                String input = "";
-                while (input != null) {
-                    input = rsr.readString();
-                    if (input != null) {
-                        tempNames.add(input);
-                    }
-                }
-                RaceConstants.RACE_NAMES = tempNames
-                        .toArray(new String[tempNames.size()]);
-                RaceConstants.RACES_COUNT = RaceConstants.RACE_NAMES.length;
-                RaceConstants.INITED = true;
-            } catch (final IOException ioe) {
-                TallerTower.getErrorLogger().logError(ioe);
-            }
-        }
+	if (!RaceConstants.INITED) {
+	    try (final ResourceStreamReader rsr = new ResourceStreamReader(RaceDataManager.class
+		    .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/race/catalog.txt"))) {
+		// Fetch data
+		final ArrayList<String> tempNames = new ArrayList<>();
+		String input = "";
+		while (input != null) {
+		    input = rsr.readString();
+		    if (input != null) {
+			tempNames.add(input);
+		    }
+		}
+		RaceConstants.RACE_NAMES = tempNames.toArray(new String[tempNames.size()]);
+		RaceConstants.RACES_COUNT = RaceConstants.RACE_NAMES.length;
+		RaceConstants.INITED = true;
+	    } catch (final IOException ioe) {
+		TallerTower.logError(ioe);
+	    }
+	}
     }
 }

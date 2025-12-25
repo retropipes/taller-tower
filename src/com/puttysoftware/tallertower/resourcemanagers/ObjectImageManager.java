@@ -11,7 +11,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import com.puttysoftware.images.BufferedImageIcon;
+import org.retropipes.diane.asset.image.BufferedImageIcon;
 
 public class ObjectImageManager {
     private static final String DEFAULT_LOAD_PATH = "/com/puttysoftware/tallertower/resources/graphics/objects/";
@@ -25,29 +25,26 @@ public class ObjectImageManager {
      * @param transformColor
      * @return
      */
-    public static BufferedImageIcon getImage(final String name,
-            final int baseID, final int transformColor) {
-        // Get it from the cache
-        final String baseName = ObjectImageConstants.getObjectImageName(baseID);
-        final BufferedImageIcon bii = ObjectImageCache.getCachedImage(name,
-                baseName);
-        return ImageTransformer.templateTransformImage(bii, transformColor,
-                ImageTransformer.getGraphicSize());
+    public static BufferedImageIcon getImage(final String name, final int baseID, final int transformColor) {
+	// Get it from the cache
+	final String baseName = ObjectImageConstants.getObjectImageName(baseID);
+	final BufferedImageIcon bii = ObjectImageCache.getCachedImage(name, baseName);
+	return ImageTransformer.templateTransformImage(bii, transformColor, ImageTransformer.getGraphicSize());
     }
 
     static BufferedImageIcon getUncachedImage(final String name) {
-        try {
-            final String normalName = ImageTransformer.normalizeName(name);
-            final URL url = ObjectImageManager.LOAD_CLASS.getResource(
-                    ObjectImageManager.LOAD_PATH + normalName + ".png");
-            final BufferedImage image = ImageIO.read(url);
-            return new BufferedImageIcon(image);
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
-        } catch (final IllegalArgumentException ia) {
-            return null;
-        }
+	try {
+	    final String normalName = ImageTransformer.normalizeName(name);
+	    final URL url = ObjectImageManager.LOAD_CLASS
+		    .getResource(ObjectImageManager.LOAD_PATH + normalName + ".png");
+	    final BufferedImage image = ImageIO.read(url);
+	    return new BufferedImageIcon(image);
+	} catch (final IOException ie) {
+	    return null;
+	} catch (final NullPointerException np) {
+	    return null;
+	} catch (final IllegalArgumentException ia) {
+	    return null;
+	}
     }
 }
