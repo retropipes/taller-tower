@@ -11,13 +11,13 @@ import java.io.IOException;
 import org.retropipes.diane.fileio.DataIOFactory;
 import org.retropipes.diane.fileio.XDataReader;
 import org.retropipes.diane.fileio.XDataWriter;
+import org.retropipes.diane.fileio.legacy.UnexpectedTagException;
 import org.retropipes.diane.gui.dialog.CommonDialogs;
 
 import com.puttysoftware.tallertower.TallerTower;
 import com.puttysoftware.tallertower.VersionException;
 import com.puttysoftware.tallertower.creatures.party.PartyMember;
 import com.puttysoftware.tallertower.maze.Extension;
-import com.puttysoftware.xio.legacy.UnexpectedTagException;
 
 public class CharacterLoader {
     private static PartyMember loadCharacter(final String name) {
