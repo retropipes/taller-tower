@@ -5,6 +5,7 @@ module com.puttysoftware.tallertower {
     requires org.retropipes.diane.fileio.utility;
     requires org.retropipes.diane.gui;
     requires org.retropipes.diane.help;
+    requires org.retropipes.diane.integration;
     requires org.retropipes.diane.internal;
     requires org.retropipes.diane.polytable;
     requires org.retropipes.diane.random;

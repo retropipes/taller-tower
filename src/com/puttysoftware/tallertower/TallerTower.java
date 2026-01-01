@@ -7,11 +7,10 @@ package com.puttysoftware.tallertower;
 
 import org.retropipes.diane.Diane;
 import org.retropipes.diane.gui.dialog.CommonDialogs;
+import org.retropipes.diane.integration.Integration;
 
-import com.puttysoftware.platform.Platform;
 import com.puttysoftware.tallertower.creatures.AbstractCreature;
-import com.puttysoftware.tallertower.prefs.PreferencesManager;
-import com.puttysoftware.tallertower.resourcemanagers.LogoManager;
+import com.puttysoftware.tallertower.prefs.PreferencesLauncher;
 
 public class TallerTower {
     // Constants
@@ -39,6 +38,8 @@ public class TallerTower {
     }
 
     public static void preInit() {
+	// Install error handler
+	Diane.installDefaultErrorHandler(TallerTower.PROGRAM_NAME);
 	// Compute action cap
 	AbstractCreature.computeActionCap(TallerTower.BATTLE_MAZE_SIZE, TallerTower.BATTLE_MAZE_SIZE);
     }
@@ -48,18 +49,15 @@ public class TallerTower {
 	    // Pre-Init
 	    TallerTower.preInit();
 	    // Integrate with host platform
-	    Platform.hookLAF(TallerTower.PROGRAM_NAME);
+	    Integration i = Integration.integrate();
 	    TallerTower.application = new Application();
 	    TallerTower.application.postConstruct();
 	    Application.playLogoSound();
 	    TallerTower.application.getGUIManager().showGUI();
 	    // Register platform hooks
-	    Platform.hookAbout(TallerTower.application.getAboutDialog(),
-		    TallerTower.application.getAboutDialog().getClass().getDeclaredMethod("showAboutDialog"));
-	    Platform.hookPreferences(PreferencesManager.class, PreferencesManager.class.getDeclaredMethod("showPrefs"));
-	    Platform.hookQuit(TallerTower.application.getGUIManager(),
-		    TallerTower.application.getGUIManager().getClass().getDeclaredMethod("quitHandler"));
-	    Platform.hookDockIcon(LogoManager.getLogo());
+	    i.setAboutHandler(TallerTower.application.getAboutDialog());
+	    i.setPreferencesHandler(new PreferencesLauncher());
+	    i.setQuitHandler(TallerTower.application.getGUIManager());
 	    // Set up Common Dialogs
 	    CommonDialogs.setDefaultTitle(TallerTower.PROGRAM_NAME);
 	    CommonDialogs.setIcon(Application.getMicroLogo());

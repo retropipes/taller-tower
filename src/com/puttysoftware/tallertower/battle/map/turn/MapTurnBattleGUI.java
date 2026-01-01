@@ -26,7 +26,6 @@ import org.retropipes.diane.asset.image.BufferedImageIcon;
 import org.retropipes.diane.drawgrid.DrawGrid;
 import org.retropipes.diane.gui.dialog.CommonDialogs;
 
-import com.puttysoftware.platform.Platform;
 import com.puttysoftware.tallertower.TallerTower;
 import com.puttysoftware.tallertower.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.tallertower.battle.AbstractBattle;
@@ -40,7 +39,6 @@ import com.puttysoftware.tallertower.maze.objects.EmptyVoid;
 import com.puttysoftware.tallertower.prefs.PreferencesManager;
 import com.puttysoftware.tallertower.resourcemanagers.BattleImageManager;
 import com.puttysoftware.tallertower.resourcemanagers.ImageTransformer;
-import com.puttysoftware.tallertower.resourcemanagers.LogoManager;
 import com.puttysoftware.tallertower.resourcemanagers.MusicConstants;
 import com.puttysoftware.tallertower.resourcemanagers.MusicManager;
 
@@ -224,7 +222,6 @@ class MapTurnBattleGUI {
 	this.end.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey),
 		"End Turn");
 	this.end.getActionMap().put("End Turn", handler);
-	Platform.hookFrameIcon(this.battleFrame, LogoManager.getIconLogo());
 	this.battleFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	this.battleFrame.setResizable(false);
 	this.drawGrid = new DrawGrid(MapBattleViewingWindowManager.getViewingWindowSize());

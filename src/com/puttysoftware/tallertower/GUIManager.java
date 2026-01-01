@@ -8,6 +8,9 @@ package com.puttysoftware.tallertower;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitHandler;
+import java.awt.desktop.QuitResponse;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -27,7 +30,7 @@ import com.puttysoftware.tallertower.maze.MazeManager;
 import com.puttysoftware.tallertower.prefs.PreferencesManager;
 import com.puttysoftware.tallertower.resourcemanagers.LogoManager;
 
-public final class GUIManager {
+public final class GUIManager implements QuitHandler {
     // Fields
     private final JFrame guiFrame;
     private final JLabel logoLabel;
@@ -151,6 +154,15 @@ public final class GUIManager {
 	@Override
 	public void windowOpened(final WindowEvent arg0) {
 	    // Do nothing
+	}
+    }
+
+    @Override
+    public void handleQuitRequestWith(QuitEvent e, QuitResponse response) {
+	if (this.quitHandler()) {
+	    response.performQuit();
+	} else {
+	    response.cancelQuit();
 	}
     }
 }
