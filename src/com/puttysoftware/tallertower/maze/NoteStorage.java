@@ -5,17 +5,17 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.tallertower.maze;
 
-import com.puttysoftware.llds.LowLevelObjectDataStore;
+import org.retropipes.diane.storage.ObjectStorage;
 
-class LowLevelNoteDataStore extends LowLevelObjectDataStore {
+class NoteStorage extends ObjectStorage<MazeNote> {
     // Constructor
-    LowLevelNoteDataStore(final int... shape) {
+    NoteStorage(final int... shape) {
 	super(shape);
     }
 
     // Methods
     public MazeNote getNote(final int... loc) {
-	return (MazeNote) this.getCell(loc);
+	return this.getCell(loc);
     }
 
     public void setNote(final MazeNote obj, final int... loc) {

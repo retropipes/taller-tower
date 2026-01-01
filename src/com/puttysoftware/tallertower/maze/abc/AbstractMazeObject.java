@@ -14,8 +14,8 @@ import org.retropipes.diane.fileio.XDataReader;
 import org.retropipes.diane.fileio.XDataWriter;
 import org.retropipes.diane.random.RandomRange;
 
-import com.puttysoftware.llds.CloneableObject;
 import com.puttysoftware.tallertower.TallerTower;
+import com.puttysoftware.tallertower.maze.CloneableObject;
 import com.puttysoftware.tallertower.maze.FormatConstants;
 import com.puttysoftware.tallertower.maze.Maze;
 import com.puttysoftware.tallertower.maze.MazeConstants;

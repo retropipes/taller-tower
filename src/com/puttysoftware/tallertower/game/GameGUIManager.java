@@ -21,9 +21,9 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import org.retropipes.diane.asset.image.BufferedImageIcon;
+import org.retropipes.diane.drawgrid.DrawGrid;
 
 import com.puttysoftware.tallertower.Application;
-import com.puttysoftware.tallertower.DrawGrid;
 import com.puttysoftware.tallertower.TallerTower;
 import com.puttysoftware.tallertower.maze.Maze;
 import com.puttysoftware.tallertower.maze.MazeConstants;

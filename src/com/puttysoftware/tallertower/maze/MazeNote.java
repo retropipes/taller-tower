@@ -10,8 +10,6 @@ import java.io.IOException;
 import org.retropipes.diane.fileio.XDataReader;
 import org.retropipes.diane.fileio.XDataWriter;
 
-import com.puttysoftware.llds.CloneableObject;
-
 public class MazeNote extends CloneableObject {
     // Fields
     private String contents;

@@ -25,10 +25,10 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import org.retropipes.diane.asset.image.BufferedImageIcon;
+import org.retropipes.diane.drawgrid.DrawGrid;
 import org.retropipes.diane.gui.dialog.CommonDialogs;
 
 import com.puttysoftware.platform.Platform;
-import com.puttysoftware.tallertower.DrawGrid;
 import com.puttysoftware.tallertower.TallerTower;
 import com.puttysoftware.tallertower.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.tallertower.battle.AbstractBattle;

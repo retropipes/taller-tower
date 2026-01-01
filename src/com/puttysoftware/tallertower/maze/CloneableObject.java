@@ -1,4 +1,4 @@
-package com.puttysoftware.llds;
+package com.puttysoftware.tallertower.maze;
 
 public class CloneableObject implements Cloneable {
     // Constructor

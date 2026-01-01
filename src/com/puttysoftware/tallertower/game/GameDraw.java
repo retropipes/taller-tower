@@ -5,7 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import com.puttysoftware.tallertower.DrawGrid;
+import org.retropipes.diane.drawgrid.DrawGrid;
+
 import com.puttysoftware.tallertower.prefs.PreferencesManager;
 import com.puttysoftware.tallertower.resourcemanagers.ImageTransformer;
 
