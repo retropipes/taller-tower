@@ -1,5 +1,7 @@
 module com.puttysoftware.tallertower {
     requires org.retropipes.diane.asset.image;
+    requires org.retropipes.diane.asset.music;
+    requires org.retropipes.diane.asset.sound;
     requires org.retropipes.diane.drawgrid;
     requires org.retropipes.diane.fileio;
     requires org.retropipes.diane.fileio.utility;
